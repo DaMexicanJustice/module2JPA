@@ -1,0 +1,5 @@
+entity\Person.class
+creator\Creator.class
+entitymanager\PersonCreator.class
+entitymanager\PersonUpdater.class
+entity\Person_.class
