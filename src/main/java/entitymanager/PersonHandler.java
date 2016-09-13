@@ -18,6 +18,7 @@ public class PersonHandler {
     
     private Person person;
     
+    
     public PersonHandler() {
     
     }
@@ -50,8 +51,8 @@ public class PersonHandler {
       EntityManager entitymanager = emfactory.createEntityManager( );
       entitymanager.getTransaction( ).begin( );
       
-      Person person = entitymanager.find( Person.class, id );
-      entitymanager.remove( person );
+      Person foundPerson = entitymanager.find( Person.class, id );
+      entitymanager.remove( foundPerson );
       entitymanager.getTransaction( ).commit( );
       entitymanager.close( );
       emfactory.close( );
@@ -70,18 +71,18 @@ public class PersonHandler {
 
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
-        Person person = entitymanager.find(Person.class, id);
+        Person foundPerson = entitymanager.find(Person.class, id);
             System.out.println("Method returned null");
         
         try {
         //before update
-        System.out.println(person);
-        person.setName(newname);
-        person.setAge(newage);
+        System.out.println(foundPerson);
+        foundPerson.setName(newname);
+        foundPerson.setAge(newage);
         entitymanager.getTransaction().commit();
 
         //after update
-        System.out.println(person);
+        System.out.println(foundPerson);
         entitymanager.close();
         emfactory.close();
         } catch (NullPointerException ex) {
