@@ -6,10 +6,7 @@
 package creator;
 
 import entity.Person;
-import entitymanager.PersonCreator;
-import entitymanager.PersonDeleter;
-import entitymanager.PersonFinder;
-import entitymanager.PersonUpdater;
+import entitymanager.PersonHandler;
 import javax.persistence.Persistence;
 
 /**
@@ -22,25 +19,25 @@ public class Creator {
         // Create database
         Persistence.generateSchema("JPADemo1PU", null);
         
+        /* Create a new handler that handles entities of type person using
+         entity manager and factory */
+        PersonHandler ph = new PersonHandler();
+        
         // Create an entity and insert into table
-        PersonCreator cp = new PersonCreator();
-        Person person = cp.createNew("Patrick", 25);
-        cp.persist(person);
-        cp.persist(cp.createNew("Imposter", 1));
+        Person person = ph.createNew("Patrick", 25);
+        ph.persist(person);
+        ph.persist(ph.createNew("Imposter", 1));
         
         
         // Update an existing entity in table
-        PersonUpdater up = new PersonUpdater();
-        up.update(person.getId(), "DaMexicanJutice", 25);
+        ph.update(person.getId(), "DaMexicanJutice", 25);
         
         // Lookup a person in the table 
-        PersonFinder pf = new PersonFinder();
-        Person foundPerson = pf.findPerson(person.getId());
+        Person foundPerson = ph.findPerson(person.getId());
         System.out.println("Found: " + foundPerson.getId() + ":" + foundPerson.getName() + "," + foundPerson.getAge());
         
         // Delete a person from the table
-        PersonDeleter pd = new PersonDeleter();
-        boolean deleted = pd.deletePerson(foundPerson.getId());
+        boolean deleted = ph.deletePerson(foundPerson.getId());
         System.out.println("Did we delete?" + deleted);
     }
     
